@@ -7,10 +7,11 @@ import logging
 import discord
 from discord import app_commands
 
+from bot.permissions import can_submit
 from commands.help import register_help_command
+from commands.set_api_key import register_set_api_key_command
 from commands.status import register_status_command
 from config import Settings
-from bot.permissions import can_submit
 
 log = logging.getLogger("cryptowire.discord")
 
@@ -25,6 +26,7 @@ class CryptoWireClient(discord.Client):
 
         register_help_command(self.tree)
         register_status_command(self.tree, settings)
+        register_set_api_key_command(self.tree, settings)
 
     async def setup_hook(self) -> None:
         if self.settings.discord_guild_id:
@@ -62,8 +64,6 @@ class CryptoWireClient(discord.Client):
                 log.exception("Could not notify unauthorized submitter")
             return
 
-        # Stage 2 confirms channel intake only. Draft persistence and media processing
-        # are deliberately implemented in Stage 3.
         attachment_count = len(message.attachments)
         log.info(
             "Authorized submission received: user_id=%s message_id=%s attachments=%s",
