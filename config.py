@@ -15,7 +15,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    discord_bot_token: str = ""
+    discord_bot_token: str = Field(default="", repr=False)
     discord_guild_id: int | None = None
     submission_channel_id: int | None = None
     approval_channel_id: int | None = None
@@ -31,7 +31,10 @@ class Settings(BaseSettings):
         for item in value.split(","):
             item = item.strip()
             if item:
-                parsed.add(int(item))
+                user_id = int(item)
+                if user_id <= 0:
+                    raise ValueError("Discord IDs must be positive integers")
+                parsed.add(user_id)
         return parsed
 
     @property
