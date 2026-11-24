@@ -12,11 +12,16 @@ def register_help_command(tree: CommandTree) -> None:
             title="CryptoWire Help",
             description=(
                 "CryptoWire receives submissions in the configured channel. "
-                "During Stage 2, intake is acknowledged but drafts are not yet created "
-                "and nothing is published to Binance."
+                "Submissions are not published automatically; administrator approval "
+                will be required before Binance Square publishing."
             ),
             color=discord.Color.blurple(),
         )
         embed.add_field(name="/status", value="Check bot health and configuration status", inline=False)
+        embed.add_field(
+            name="/set_api_key",
+            value="Administrators: securely configure the Binance Square API key using a private modal.",
+            inline=False,
+        )
         embed.add_field(name="Submission channel", value="Send content in the configured channel if authorized", inline=False)
         await interaction.response.send_message(embed=embed, ephemeral=True)
