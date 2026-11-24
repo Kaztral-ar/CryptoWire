@@ -13,7 +13,7 @@ def register_help_command(tree: CommandTree) -> None:
             description=(
                 "CryptoWire receives submissions in the configured channel. "
                 "Submissions are not published automatically; administrator approval "
-                will be required before Binance Square publishing."
+                "will be required before Binance Square publishing."
             ),
             color=discord.Color.blurple(),
         )
