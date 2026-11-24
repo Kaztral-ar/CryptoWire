@@ -22,6 +22,8 @@ class Settings(BaseSettings):
     admin_user_ids: str = ""
     allowed_submitter_ids: str = ""
     binance_square_openapi_key: str = Field(default="", repr=False)
+    cryptowire_secret_key: str = Field(default="", repr=False)
+    binance_square_secret_file: str = "storage/binance_square_api_key.enc"
     database_url: str = "sqlite:///cryptowire.db"
     log_level: str = "INFO"
 
