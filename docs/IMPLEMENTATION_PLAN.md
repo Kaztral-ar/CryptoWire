@@ -7,14 +7,15 @@
 - [x] Establish initial repository structure
 
 ## Stage 2 — Discord foundation
-- [ ] Implement Discord client and lifecycle
-- [ ] Register slash commands
-- [ ] Implement default-deny user and administrator permissions
-- [ ] Restrict intake to the configured submission channel
-- [ ] Add health/status command and graceful shutdown
+- [x] Implement Discord client and lifecycle
+- [x] Register and synchronize slash commands
+- [x] Implement default-deny submitter authorization
+- [x] Restrict intake to the configured submission channel
+- [x] Add help/status commands and graceful shutdown
+- [x] Add permission tests and setup documentation
 
 ## Stage 3 — Intake and drafts
-- [ ] Accept text submissions
+- [ ] Accept text submissions into persistent drafts
 - [ ] Download attachments safely with size limits
 - [ ] Validate MIME type and publishing compatibility
 - [ ] Create versioned drafts
