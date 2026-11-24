@@ -1,0 +1,1 @@
+"""Binance Square integration boundary."""
