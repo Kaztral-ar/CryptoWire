@@ -229,7 +229,14 @@ Live Discord interactions and real Binance Square publishing have not been verif
 
 Before enabling publication, verify current Binance account eligibility, API access requirements, supported content formats, and publishing limits against Binance's official documentation.
 
----
+
+## ☕ Support
+
+If you find this project useful, you can support its development with a coffee.
+
+<a href="https://buymeacoffee.com/k4tral" target="_blank">
+  <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support%20my%20work-yellow?style=for-the-badge&logo=buymeacoffee&logoColor=white" alt="Buy Me a Coffee" />
+</a>
 
 <p align="center">
   Built for controlled publishing. <strong>Review first. Publish only after approval.</strong>
