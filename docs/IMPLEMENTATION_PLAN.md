@@ -6,8 +6,11 @@
 - [x] Define approval-first publishing policy
 - [x] Establish initial repository structure
 
-## Stage 2 — Discord foundation
+## Stage 2 — Multi-platform bot foundation
 - [x] Implement Discord client and lifecycle
+- [x] Add optional Telegram polling interface
+- [x] Route both platforms through a shared authorization/intake service
+- [x] Keep platform-specific user allowlists separate
 - [x] Register and synchronize slash commands
 - [x] Implement default-deny submitter authorization
 - [x] Restrict intake to the configured submission channel
