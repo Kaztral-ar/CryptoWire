@@ -1,8 +1,8 @@
 # CryptoWire
 
 <p align="center">
-  <strong>Discord → Review → Binance Square</strong><br/>
-  A controlled publishing assistant for Binance Square, built with Python and Discord.
+  <strong>Discord + Telegram → Shared Intake → Review → Binance Square</strong><br/>
+  A controlled multi-platform publishing assistant for Binance Square, built with Python.
 </p>
 
 <p align="center">
@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/Storage-SQLite%20planned-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite planned"/>
 </p>
 
-CryptoWire is a Discord-based workflow for preparing content for Binance Square. It is designed around one important rule: **receiving a submission must never publish it automatically**. Content should be reviewed and explicitly approved by an authorized administrator before a publishing integration is allowed to send it.
+CryptoWire is a multi-platform workflow for preparing content for Binance Square. It is designed around one important rule: **receiving a submission must never publish it automatically**. Content should be reviewed and explicitly approved by an authorized administrator before a publishing integration is allowed to send it.
 
 > **Development status:** The Discord foundation, access controls, and encrypted API-key configuration command are implemented. Draft creation, interactive approval, and Binance Square publishing are not implemented yet.
 
@@ -22,6 +22,8 @@ CryptoWire is a Discord-based workflow for preparing content for Binance Square.
 | Area | Current state |
 | --- | --- |
 | Discord bot foundation | Implemented |
+| Telegram bot interface | Implemented (optional) |
+| Shared cross-platform intake and authorization | Implemented |
 | `/help` and `/status` | Implemented |
 | Submission-channel access control | Implemented |
 | Admin-only `/set_api_key` | Implemented |
@@ -33,10 +35,11 @@ CryptoWire is a Discord-based workflow for preparing content for Binance Square.
 ## How CryptoWire is intended to work
 
 ```text
-Authorized Discord submission
-             │
-             ▼
-      Content validation
+Discord submission ─┐
+                    ├──► Shared intake + authorization
+Telegram submission┘              │
+                                  ▼
+                         Content validation
              │
              ▼
        Draft + preview
@@ -58,6 +61,8 @@ The diagram describes the target workflow, not a claim that every stage is alrea
 ## Implemented features
 
 - **Discord application commands:** command synchronization plus `/help` and `/status`.
+- **Telegram submission interface:** optional polling bot with `/start`, `/help`, and text/media intake.
+- **Shared backend:** Discord and Telegram adapters call the same submission authorization and intake service. Platform user IDs use separate allowlists.
 - **Restricted submission intake:** the bot monitors the configured submission channel and accepts messages only from administrators or explicitly allowlisted submitters.
 - **Administrator-only credential setup:** `/set_api_key` opens a private Discord modal for a configured administrator.
 - **Encrypted credential storage:** the submitted key is encrypted with Fernet before it is written to the configured local file.
@@ -104,7 +109,7 @@ On Windows, copy `.env.example` to `.env` manually or use:
 Copy-Item .env.example .env
 ```
 
-Set the Discord bot token, submission channel ID, and at least one administrator user ID in `.env`.
+Set the Discord bot token, submission channel ID, and at least one Discord administrator user ID in `.env`. Telegram is optional; set its token and Telegram administrator ID list to enable it.
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
@@ -113,7 +118,10 @@ Set the Discord bot token, submission channel ID, and at least one administrator
 | `ADMIN_USER_IDS` | Yes | Comma-separated Discord administrator IDs |
 | `CRYPTOWIRE_SECRET_KEY` | For `/set_api_key` | Fernet encryption key, stored separately from encrypted credential |
 | `DISCORD_GUILD_ID` | No | Guild-scoped command sync for development |
-| `ALLOWED_SUBMITTER_IDS` | No | Additional comma-separated submitter IDs |
+| `ALLOWED_SUBMITTER_IDS` | No | Additional comma-separated Discord submitter IDs |
+| `TELEGRAM_BOT_TOKEN` | No | Enables the Telegram interface when set |
+| `TELEGRAM_ADMIN_USER_IDS` | When Telegram enabled | Comma-separated Telegram administrator user IDs |
+| `TELEGRAM_ALLOWED_SUBMITTER_IDS` | No | Additional Telegram submitter IDs |
 | `APPROVAL_CHANNEL_ID` | No | Reserved for the planned approval workflow |
 | `BINANCE_SQUARE_SECRET_FILE` | No | Encrypted credential path; defaults to `storage/binance_square_api_key.enc` |
 | `BINANCE_SQUARE_OPENAPI_KEY` | No | Legacy environment-based credential fallback for the future adapter |
@@ -141,7 +149,7 @@ In the Discord Developer Portal:
 3. Invite the bot using the `bot` and `applications.commands` scopes.
 4. Grant only the channel permissions it needs, including viewing the submission channel, reading message history, sending messages, and adding reactions.
 
-### 6. Start the bot
+### 6. Configure Telegram (optional)\n\n1. Create a bot with [@BotFather](https://t.me/BotFather) and copy its token into `TELEGRAM_BOT_TOKEN`.\n2. Obtain numeric Telegram user IDs for administrators and submitters.\n3. Set `TELEGRAM_ADMIN_USER_IDS` and optionally `TELEGRAM_ALLOWED_SUBMITTER_IDS`. These are Telegram account IDs, not Discord IDs.\n4. Start a private chat with the bot and send `/start`.\n\nWhen configured, Telegram polling and the Discord gateway run in the same Python process. If `TELEGRAM_BOT_TOKEN` is blank, CryptoWire runs Discord only.\n\n### 7. Start the bot
 
 ```bash
 python bot.py
@@ -204,7 +212,7 @@ CryptoWire/
 ## Roadmap
 
 - [x] Stage 1 — Architecture and repository scaffold
-- [x] Stage 2 — Discord client, commands, and access control
+- [x] Stage 2 — Discord and Telegram interfaces, shared intake, and access control
 - [x] Administrator-only encrypted Binance API-key setup
 - [ ] Stage 3 — Submission intake, attachment validation, draft storage, and Discord preview
 - [ ] Stage 4 — Administrator approval/rejection workflow and version-bound approvals
@@ -220,7 +228,7 @@ Run the current test suite from the repository root:
 pytest -q
 ```
 
-Live Discord interactions and real Binance Square publishing have not been verified. Publishing remains disabled until the adapter and approval workflow are implemented and tested.
+Live Discord/Telegram interactions and real Binance Square publishing have not been verified. Publishing remains disabled until the adapter and approval workflow are implemented and tested.
 
 ## Binance Square resources
 
