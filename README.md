@@ -111,6 +111,16 @@ GitHub Actions workflows are not configured in this repository. Contributions an
 
 ---
 
+## Support
+
+If CryptoWire is useful to you, consider supporting its development.
+
+<div align="center">
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/k4tral)
+
+</div>
+
 <div align="center">
 
 **CryptoWire** · Receive first. Review next. Publish only when approved.
