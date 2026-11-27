@@ -2,11 +2,9 @@
 
 <img src="assets/cryptowire-banner.svg" alt="CryptoWire — one intake, two platforms, controlled publishing" width="100%"/>
 
-[![CI](https://github.com/Kaztral-ar/CryptoWire/actions/workflows/ci.yml/badge.svg)](https://github.com/Kaztral-ar/CryptoWire/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![Discord](https://img.shields.io/badge/Discord-supported-5865F2?logo=discord&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Telegram-supported-26A5E4?logo=telegram&logoColor=white)
-![License](https://img.shields.io/badge/License-check%20repository-lightgrey)
 
 **A shared submission gateway for Discord and Telegram, built for controlled Binance Square publishing.**
 
@@ -94,7 +92,7 @@ python bot.py
 
 | Feature | Status |
 | --- | --- |
-| Discord + Telegram intake | <span>Implemented</span> |
+| Discord + Telegram intake | Implemented |
 | Shared authorization | Implemented |
 | Encrypted API-key setup | Implemented |
 | Persistent drafts and media | Planned |
@@ -103,11 +101,13 @@ python bot.py
 
 ## Development
 
+Run the test suite locally:
+
 ```bash
 pytest -q
 ```
 
-Contributions and bug reports are welcome. See [Issues](https://github.com/Kaztral-ar/CryptoWire/issues).
+GitHub Actions workflows are not configured in this repository. Contributions and bug reports are welcome. See [Issues](https://github.com/Kaztral-ar/CryptoWire/issues).
 
 ---
 
