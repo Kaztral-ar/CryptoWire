@@ -11,7 +11,7 @@ from commands.help import register_help_command
 from commands.set_api_key import register_set_api_key_command
 from commands.status import register_status_command
 from config import Settings
-from services.submissions import process_submission
+from services.submissions import Submission, process_submission
 
 log = logging.getLogger("cryptowire.discord")
 
@@ -52,10 +52,13 @@ class CryptoWireClient(discord.Client):
             return
 
         accepted = process_submission(
-            platform="discord",
-            user_id=message.author.id,
-            submission_id=str(message.id),
-            attachment_count=len(message.attachments),
+            Submission(
+                platform="discord",
+                user_id=message.author.id,
+                submission_id=str(message.id),
+                content=message.content,
+                attachment_count=len(message.attachments),
+            ),
             admins=self.settings.admins,
             allowed_submitters=self.settings.allowed_submitters,
         )
