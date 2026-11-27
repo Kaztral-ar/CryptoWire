@@ -9,7 +9,7 @@ from integrations.binance_square.credentials import load_api_key, save_api_key
 
 def make_settings(tmp_path, key: str | None = None) -> Settings:
     return Settings(
-        cryptowire_secret_key=key or Fernet.generate_key().decode("ascii"),
+        cryptowire_secret_key=key if key is not None else Fernet.generate_key().decode("ascii"),
         binance_square_secret_file=str(tmp_path / "storage" / "binance_square_api_key.enc"),
         binance_square_openapi_key="",
     )
