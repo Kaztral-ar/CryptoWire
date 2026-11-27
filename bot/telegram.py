@@ -8,7 +8,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
 from config import Settings
-from services.submissions import process_submission
+from services.submissions import Submission, process_submission
 
 log = logging.getLogger("cryptowire.telegram")
 
@@ -48,10 +48,13 @@ async def handle_submission(update: Update, context: ContextTypes.DEFAULT_TYPE) 
 
     settings: Settings = context.application.bot_data["settings"]
     accepted = process_submission(
-        platform="telegram",
-        user_id=user.id,
-        submission_id=str(message.message_id),
-        attachment_count=_attachment_count(message),
+        Submission(
+            platform="telegram",
+            user_id=user.id,
+            submission_id=str(message.message_id),
+            content=message.text or message.caption or "",
+            attachment_count=_attachment_count(message),
+        ),
         admins=settings.telegram_admins,
         allowed_submitters=settings.telegram_allowed_submitters,
     )
