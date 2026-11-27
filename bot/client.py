@@ -1,4 +1,4 @@
-"""CryptoWire Discord client and Stage 2 event handling."""
+"""CryptoWire Discord client and event handling."""
 
 from __future__ import annotations
 
@@ -7,11 +7,11 @@ import logging
 import discord
 from discord import app_commands
 
-from bot.permissions import can_submit
 from commands.help import register_help_command
 from commands.set_api_key import register_set_api_key_command
 from commands.status import register_status_command
 from config import Settings
+from services.submissions import process_submission
 
 log = logging.getLogger("cryptowire.discord")
 
@@ -51,9 +51,15 @@ class CryptoWireClient(discord.Client):
         if message.channel.id != self.settings.submission_channel_id:
             return
 
-        user_id = message.author.id
-        if not can_submit(user_id, self.settings.admins, self.settings.allowed_submitters):
-            log.warning("Rejected submission-channel message from unauthorized user ID %s", user_id)
+        accepted = process_submission(
+            platform="discord",
+            user_id=message.author.id,
+            submission_id=str(message.id),
+            attachment_count=len(message.attachments),
+            admins=self.settings.admins,
+            allowed_submitters=self.settings.allowed_submitters,
+        )
+        if not accepted:
             try:
                 await message.reply(
                     "You are not authorized to submit content to CryptoWire.",
@@ -64,13 +70,6 @@ class CryptoWireClient(discord.Client):
                 log.exception("Could not notify unauthorized submitter")
             return
 
-        attachment_count = len(message.attachments)
-        log.info(
-            "Authorized submission received: user_id=%s message_id=%s attachments=%s",
-            user_id,
-            message.id,
-            attachment_count,
-        )
         try:
             await message.add_reaction("📥")
         except discord.HTTPException:
