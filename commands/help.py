@@ -11,7 +11,7 @@ def register_help_command(tree: CommandTree) -> None:
         embed = discord.Embed(
             title="CryptoWire Help",
             description=(
-                "CryptoWire receives submissions in the configured channel. "
+                "CryptoWire receives submissions from the configured Discord channel and optional Telegram bot. "
                 "Submissions are not published automatically; administrator approval "
                 "will be required before Binance Square publishing."
             ),
@@ -23,5 +23,5 @@ def register_help_command(tree: CommandTree) -> None:
             value="Administrators: securely configure the Binance Square API key using a private modal.",
             inline=False,
         )
-        embed.add_field(name="Submission channel", value="Send content in the configured channel if authorized", inline=False)
+        embed.add_field(name="Submission channels", value="Discord: configured channel. Telegram: send a message to the configured bot. Both use the same intake service.", inline=False)
         await interaction.response.send_message(embed=embed, ephemeral=True)
